@@ -18,7 +18,7 @@ if __name__ == '__main__':
     naive = naive_bayes.MultinomialNB(fit_prior=True)
     iterations = range(3, 11)
     scores = [cross_val_score(naive, data, target, cv=iteration) for iteration in iterations]
-    mean_errors = [mean(score) for score in scores]
+    mean_errors = [1 - mean(score) for score in scores]
     std_dev_errors = [stdev(score) for score in scores]
     print('The mean error of cross validation trained model using 3 folds is %0.3f' % (mean_errors[0]))
     print('The mean error of cross validation trained model using 5 folds is %0.3f' % (mean_errors[2]))
