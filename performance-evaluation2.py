@@ -11,7 +11,7 @@ import random
 from sklearn import datasets, naive_bayes
 import numpy as np
 from statistics import mean
-import matplotlib
+import matplotlib.pyplot as plt
 
 
 def split(s, training_proportion):
@@ -26,13 +26,16 @@ def split(s, training_proportion):
     return data_s1, target_s1, data_s2, target_s2
 
 
-def test(s, clf, training_proportion, number_tests):
+def test(s, clf, training_proportion, number_tests, plot_option=False):
     iteration_error = []
     for iteration in range(number_tests):
         train_data, train_target, test_data, test_target = split(s, training_proportion)
         clf.fit(train_data, train_target)
         accuracy = clf.score(test_data, test_target)
         iteration_error.append(1 - accuracy)
+    if plot_option:
+        plt.scatter(range(number_tests), iteration_error)
+        plt.show()
     return mean(iteration_error)
 
 
@@ -49,6 +52,8 @@ if __name__ == '__main__':
     print('Error = ', total_error_third)
     print('For a training data presenting ', data_portion_tenth*100, '% of the dataset')
     print('Error = ', total_error_tenth)
+    # plot example
+    test(iris_dataset, nb, data_portion_third, test_number, plot_option=True)
 
 
 """
